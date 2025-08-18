@@ -269,8 +269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b298ccd0173efdb4e8b2a76de709ec1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1249643134}
-  smoothSpeed: 5
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,6 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e0620e2ce03b14498e0b39750a019d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraFollowBehaviour: {fileID: 519420033}
 --- !u!61 &1249643132
 BoxCollider2D:
   m_ObjectHideFlags: 0

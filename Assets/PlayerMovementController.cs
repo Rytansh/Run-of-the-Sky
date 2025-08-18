@@ -67,5 +67,15 @@ public class PlayerMovementController
         currentPos.x += velocity.x * Time.deltaTime;
         return currentPos;
     }
+
+    public Vector2 ClampPosition(Vector2 currentPos, Vector2 posToClamp)
+    {
+        if (currentPos != posToClamp)
+        {
+            currentPos = posToClamp;
+        }
+        return currentPos;
+    }
+
 }
 

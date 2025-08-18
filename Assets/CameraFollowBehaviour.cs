@@ -2,13 +2,19 @@ using UnityEngine;
 
 public class CameraFollowBehaviour : MonoBehaviour
 {
-    [SerializeField] private Transform target;       
-    private Vector2 offset = new Vector2(2f, 1f); 
-    public float smoothSpeed = 10f; // How quickly the camera catches up
+    private float scrollSpeed = 3f;
+    private float cameraHalfWidth;
 
-    void LateUpdate()
+    public float LeftBound => transform.position.x - cameraHalfWidth;
+    public float RightBound => transform.position.x + cameraHalfWidth;
+
+    void Start()
     {
-        Vector3 desiredPosition = new Vector3(target.position.x + offset.x, target.position.y + offset.y, transform.position.z);
-        transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
+        cameraHalfWidth = Camera.main.orthographicSize * Camera.main.aspect;
+    }
+
+    void Update()
+    {
+        transform.position += new Vector3(scrollSpeed * Time.deltaTime, 0, 0);
     }
 }
