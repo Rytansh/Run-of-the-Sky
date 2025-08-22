@@ -415,6 +415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e0620e2ce03b14498e0b39750a019d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpForce: 8
   cameraFollowBehaviour: {fileID: 519420033}
 --- !u!61 &1249643132
 BoxCollider2D:

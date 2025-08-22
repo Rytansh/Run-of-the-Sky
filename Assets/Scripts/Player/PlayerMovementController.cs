@@ -8,7 +8,7 @@ public class PlayerMovementController
     private float playerWidth;
 
     private float moveSpeed = 3f;
-    private float jumpForce = 8f;
+    private float jumpForce = 10f;
     private float gravity = -20f;
 
     private bool canJump = true;

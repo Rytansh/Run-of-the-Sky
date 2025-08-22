@@ -14,21 +14,16 @@ public class CollisionDetector
 
     public bool IsGrounded(Vector2 position, float groundCheckDistance, LayerMask groundMask)
     {
-        float quarterWidth = objectWidth * 0.25f;
-        float threeQuarterWidth = objectWidth * 0.75f;
 
         float bottomY = position.y - (objectHeight / 2f);
 
-        Vector2 rayOriginQuarter = new Vector2(position.x - (objectWidth / 2f) + quarterWidth, bottomY);
-        Vector2 rayOriginThreeQuarter = new Vector2(position.x - (objectWidth / 2f) + threeQuarterWidth, bottomY);
+        Vector2 rayOriginBack = new Vector2(position.x - (objectWidth / 2f), bottomY);
+        Vector2 rayOriginFront = new Vector2(position.x + (objectWidth / 2f), bottomY);
 
-        RaycastHit2D hitQuarter = Physics2D.Raycast(rayOriginQuarter, Vector2.down, groundCheckDistance, groundMask);
-        RaycastHit2D hitThreeQuarter = Physics2D.Raycast(rayOriginThreeQuarter, Vector2.down, groundCheckDistance, groundMask);
+        RaycastHit2D hitBack = Physics2D.Raycast(rayOriginBack, Vector2.down, groundCheckDistance, groundMask);
+        RaycastHit2D hitFront = Physics2D.Raycast(rayOriginFront, Vector2.down, groundCheckDistance, groundMask);
 
-        Debug.DrawRay(rayOriginQuarter, Vector2.down * groundCheckDistance, hitQuarter ? Color.green : Color.red);
-        Debug.DrawRay(rayOriginThreeQuarter, Vector2.down * groundCheckDistance, hitThreeQuarter ? Color.green : Color.red);
-
-        return hitQuarter.collider != null || hitThreeQuarter.collider != null;
+        return hitBack.collider != null || hitFront.collider != null;
     }
 
     public bool IsCollidingSideways(Vector2 position, float groundCheckDistance, LayerMask groundMask)
@@ -52,21 +47,16 @@ public class CollisionDetector
 
     public bool IsCollidingUpwards(Vector2 position, float groundCheckDistance, LayerMask groundMask)
     {
-        float quarterWidth = objectWidth * 0.25f;
-        float threeQuarterWidth = objectWidth * 0.75f;
 
         float topY = position.y + (objectHeight / 2f);
 
-        Vector2 rayOriginQuarter = new Vector2(position.x - (objectWidth / 2f) + quarterWidth, topY);
-        Vector2 rayOriginThreeQuarter = new Vector2(position.x - (objectWidth / 2f) + threeQuarterWidth, topY);
+        Vector2 rayOriginBack = new Vector2(position.x - (objectWidth / 2f), topY);
+        Vector2 rayOriginFront= new Vector2(position.x + (objectWidth / 2f), topY);
 
-        RaycastHit2D hitQuarter = Physics2D.Raycast(rayOriginQuarter, Vector2.up, groundCheckDistance, groundMask);
-        RaycastHit2D hitThreeQuarter = Physics2D.Raycast(rayOriginThreeQuarter, Vector2.up, groundCheckDistance, groundMask);
+        RaycastHit2D hitBack = Physics2D.Raycast(rayOriginBack, Vector2.up, groundCheckDistance, groundMask);
+        RaycastHit2D hitFront = Physics2D.Raycast(rayOriginFront, Vector2.up, groundCheckDistance, groundMask);
 
-        Debug.DrawRay(rayOriginQuarter, Vector2.up * groundCheckDistance, hitQuarter ? Color.green : Color.red);
-        Debug.DrawRay(rayOriginThreeQuarter, Vector2.up * groundCheckDistance, hitThreeQuarter ? Color.green : Color.red);
-
-        return hitQuarter.collider != null || hitThreeQuarter.collider != null;
+        return hitBack.collider != null || hitFront.collider != null;
     }
 
 }

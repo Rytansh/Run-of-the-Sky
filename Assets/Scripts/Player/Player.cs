@@ -4,6 +4,8 @@ public class Player : MonoBehaviour
 {
     private float playerHeight;
     private float playerWidth;
+
+    public float jumpForce = 10f;
     private PlayerPhysicsController physicsController;
     private PlayerMovementController movementController;
     private PlayerBoundaryChecker playerBoundaryChecker;
