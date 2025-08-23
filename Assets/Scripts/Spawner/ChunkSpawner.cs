@@ -12,7 +12,7 @@ public class ChunkSpawner : MonoBehaviour
     private ChunkComponent prevComponent;
 
     private Camera cam;
-    [SerializeField] private float recycleBuffer = 10f; // distance past chunk end to recycle
+    [SerializeField] private float recycleBuffer = 10f;
 
     void Start()
     {
@@ -20,10 +20,7 @@ public class ChunkSpawner : MonoBehaviour
         InitialiseAllObjectPools();
         chunkBuilder = new ChunkBuilder(2f * cam.orthographicSize * cam.aspect, 2f * cam.orthographicSize, library);
 
-        // Build the start chunk
-        Chunk startChunk = chunkBuilder.BuildStartChunk(
-            new Vector2(player.transform.position.x, player.transform.position.y - 2f)
-        );
+        Chunk startChunk = chunkBuilder.BuildStartChunk(new Vector2(player.transform.position.x, player.transform.position.y - 2f));
         BuildChunkInScene(startChunk);
     }
 
@@ -31,7 +28,6 @@ public class ChunkSpawner : MonoBehaviour
     {
         float playerX = player.transform.position.x;
 
-        // Spawn next chunk if the player is near the end of the last active chunk
         if (activeChunks.Count > 0)
         {
             Chunk lastChunk = activeChunks[activeChunks.Count - 1];
@@ -42,7 +38,6 @@ public class ChunkSpawner : MonoBehaviour
             }
         }
 
-        // Recycle chunks that are far behind the player
         for (int i = 0; i < activeChunks.Count; i++)
         {
             Chunk chunk = activeChunks[i];
@@ -60,11 +55,17 @@ public class ChunkSpawner : MonoBehaviour
         foreach (ChunkComponent component in chunkToBuild.GetComponents())
         {
             GameObject obj = objectPools[component.GetComponentType()].GetFromPool();
-            obj.transform.position = component.GetPosition();
             component.SetInstance(obj);
-            prevComponent = component;
+            obj.transform.position = component.GetPosition();
+            if (component.AffectsPlacement()) { prevComponent = component; }
+            if (component is FlowCrystal flowCrystal)
+            {
+                FlowCrystalBehaviour componentBehaviour = obj.GetComponent<FlowCrystalBehaviour>();
+                if (!componentBehaviour) { continue; }
+                componentBehaviour.Initialise(flowCrystal);
+                componentBehaviour.OnCrystalCollected += OnCrystalCollected;
+            }
         }
-
         activeChunks.Add(chunkToBuild);
     }
 
@@ -87,6 +88,17 @@ public class ChunkSpawner : MonoBehaviour
         {
             ObjectPool pool = new ObjectPool(entry.prefab, spawnerParent, 10);
             objectPools[entry.type] = pool;
+        }
+    }
+
+    private void OnCrystalCollected(FlowCrystal crystal)
+    {
+        GameObject instance = crystal.GetInstance();
+        if (instance != null)
+        {
+            FlowCrystalBehaviour behaviour = instance.GetComponent<FlowCrystalBehaviour>();
+            if (behaviour != null) { behaviour.OnCrystalCollected -= OnCrystalCollected; }
+            instance.SetActive(false);
         }
     }
 }

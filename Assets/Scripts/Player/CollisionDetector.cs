@@ -28,21 +28,18 @@ public class CollisionDetector
 
     public bool IsCollidingSideways(Vector2 position, float groundCheckDistance, LayerMask groundMask)
     {
-        float quarterHeight = objectHeight * 0.25f;
-        float threeQuarterHeight = objectHeight * 0.75f;
-
+        float halfHeight = objectHeight * 0.5f;
         float rightX = position.x + (objectWidth / 2f);
 
-        Vector2 rayOriginBottom = new Vector2(rightX, position.y - (objectHeight / 2f) + quarterHeight);
-        Vector2 rayOriginTop = new Vector2(rightX, position.y - (objectHeight / 2f) + threeQuarterHeight);
+        Vector2 rayOriginBottom = new Vector2(rightX, position.y - (objectHeight / 2f));
+        Vector2 rayOriginMid = new Vector2(rightX, position.y - (objectHeight / 2f) + halfHeight);
+        Vector2 rayOriginTop = new Vector2(rightX, position.y + (objectHeight / 2f));
 
         RaycastHit2D hitBottom = Physics2D.Raycast(rayOriginBottom, Vector2.right, groundCheckDistance, groundMask);
+        RaycastHit2D hitMid = Physics2D.Raycast(rayOriginMid, Vector2.right, groundCheckDistance, groundMask);
         RaycastHit2D hitTop = Physics2D.Raycast(rayOriginTop, Vector2.right, groundCheckDistance, groundMask);
 
-        Debug.DrawRay(rayOriginBottom, Vector2.right * groundCheckDistance, hitBottom ? Color.green : Color.red);
-        Debug.DrawRay(rayOriginTop, Vector2.right * groundCheckDistance, hitTop ? Color.green : Color.red);
-
-        return hitBottom.collider != null || hitTop.collider != null;
+        return hitBottom.collider != null || hitMid.collider != null || hitTop.collider != null;
     }
 
     public bool IsCollidingUpwards(Vector2 position, float groundCheckDistance, LayerMask groundMask)

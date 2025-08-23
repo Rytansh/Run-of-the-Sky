@@ -22,13 +22,11 @@ public class PlayerBoundaryChecker
 
         if (player.transform.position.x < followBehaviour.LeftBound)
         {
-            Debug.Log("Game Over: Player fell behind!");
             return BoundaryResult.Fallen;
         }
 
         if (player.transform.position.y < -5f)
         {
-            Debug.Log("Game Over: Player fell!");
             return BoundaryResult.Fallen;
         }
 

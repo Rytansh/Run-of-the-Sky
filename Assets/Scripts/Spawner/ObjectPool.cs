@@ -25,7 +25,7 @@ public class ObjectPool
             obj.SetActive(true);
             return obj;
         }
-        return GameObject.Instantiate(prefab);
+        return GameObject.Instantiate(prefab, parent);
     }
 
     public void ReturnToPool(GameObject instance)

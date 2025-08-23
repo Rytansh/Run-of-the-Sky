@@ -447,7 +447,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -565,6 +565,7 @@ MonoBehaviour:
   library: {fileID: 11400000, guid: 875126aa3921b6345b7f159dee148305, type: 2}
   player: {fileID: 1249643131}
   spawnerParent: {fileID: 106561472}
+  recycleBuffer: 10
 --- !u!4 &1798402294
 Transform:
   m_ObjectHideFlags: 0
